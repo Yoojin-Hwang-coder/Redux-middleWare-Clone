@@ -1,29 +1,10 @@
-const sleep = (n) => new Promise((resolve) => setTimeout(resolve, n));
-
-const posts = [
-  {
-    id: 1,
-    title: 'sports',
-    body: 'football',
-  },
-  {
-    id: 2,
-    title: 'forward',
-    body: 'Ronaldo',
-  },
-  {
-    id: 3,
-    title: 'midfilder',
-    body: 'Modric',
-  },
-];
-
+import Axios from 'axios';
 export const getPosts = async () => {
-  await sleep(500);
-  return posts;
+  const response = await Axios.get('/posts');
+  return response.data;
 };
 
 export const getPostById = async (id) => {
-  await sleep(500);
-  return posts.find((post) => post.id === id);
+  const response = await Axios.get(`/posts/${id}`);
+  return response.data;
 };

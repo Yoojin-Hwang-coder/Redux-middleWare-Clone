@@ -1,0 +1,19 @@
+{
+    "posts":[
+        {
+          "id": 1,
+          "title": "sports",
+          "body": "football"
+        },
+        {
+          "id": 2,
+          "title": "forward",
+          "body": "Ronaldo"
+        },
+        {
+          "id": 3,
+          "title": "midfilder",
+          "body": "Modric"
+        }
+      ]
+}
