@@ -1,3 +1,5 @@
+import { call, put } from '@redux-saga/core/effects';
+
 export const createPromiseThunk = (type, promiseCreater) => {
   const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
 
@@ -49,6 +51,53 @@ export const createPromiseThunkById = (
     }
   };
   return thunkCreator;
+};
+
+export const createPromiseSaga = (type, promiseCreater) => {
+  const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
+
+  function* saga(action) {
+    try {
+      const result = yield call(promiseCreater, action.payload);
+
+      yield put({
+        type: SUCCESS,
+        payload: result,
+      });
+    } catch (e) {
+      yield put({
+        type: ERROR,
+        error: true,
+        payload: e,
+      });
+    }
+  }
+  return saga;
+};
+
+export const createPromiseSagaById = (type, promiseCreater) => {
+  const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
+
+  function* saga(action) {
+    const id = action.meta;
+    try {
+      const result = yield call(promiseCreater, action.payload);
+
+      yield put({
+        type: SUCCESS,
+        payload: result,
+        meta: id,
+      });
+    } catch (e) {
+      yield put({
+        type: ERROR,
+        error: true,
+        payload: e,
+        meta: id,
+      });
+    }
+  }
+  return saga;
 };
 
 export const handleAsyncActions = (type, key) => {

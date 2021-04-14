@@ -5,16 +5,21 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import rootRedcuder from './modules';
+import rootRedcuder, { rootSaga } from './modules';
 import logger from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import ReduxThunk from 'redux-thunk';
 import { BrowserRouter } from 'react-router-dom';
+import createSagaMiddleware from 'redux-saga';
+
+const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(
   rootRedcuder,
-  composeWithDevTools(applyMiddleware(ReduxThunk, logger))
+  composeWithDevTools(applyMiddleware(sagaMiddleware, ReduxThunk, logger))
 );
+
+sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <BrowserRouter>
